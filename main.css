@@ -44,6 +44,10 @@ body a {
   padding: .5rem;
 }
 
+.file-form .header img {
+  width: 15px;
+  height: 15px;
+}
 
 .file-form .header button {
   border: 0;
@@ -87,8 +91,6 @@ body a {
 
 .file-form .header .edit-btn img,
 .file-form .header .preview-markdown-btn img {
-  width: 15px;
-  height: 15px;
   margin-left: 3px;
 }
 
