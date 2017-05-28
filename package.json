@@ -4,6 +4,7 @@
   "description": "A peer-to-peer gist-like app built with Dat",
   "main": "index.js",
   "scripts": {
+    "build": "browserify index.js -o index.build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +23,10 @@
     "url": "https://github.com/taravancil/dat-gist/issues"
   },
   "homepage": "https://github.com/taravancil/dat-gist#readme",
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "marked": "^0.3.6"
+  },
+  "devDependencies": {
+    "browserify": "^14.4.0"
+  }
 }

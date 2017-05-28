@@ -1,3 +1,5 @@
+const marked = require('marked')
+
 const formsEl = document.getElementById('forms-container')
 const submitBtn = document.getElementById('submit')
 let messageEl = document.getElementById('message')
@@ -59,14 +61,17 @@ function appendForm () {
       </button>`
   }
   var textarea = `<textarea name="content" data-form=${form.id}></textarea>`
+  var markdownPreview = `<p id="markdown-preview-${form.id}"></p>`
 
   const formContent = `
     <!-- TODO allow user to do any kind of file -->
     <div class="header">
       <input autofocus data-form=${form.id} name="path" placeholder="Filename including extension"/>
+      <button type="button" class="preview-markdown-btn markdown"></button>
       ${removeBtn}
     </div>
     ${textarea}
+    ${markdownPreview}
   `
 
   form.innerHTML = formContent
@@ -76,7 +81,7 @@ function appendForm () {
     var pathInput = document.querySelector(`input[data-form=${form.id}`)
     var removeBtn = document.querySelector(`button[data-form=${form.id}`)
 
-    pathInput.addEventListener('keyup', updateFileRendering)
+    pathInput.addEventListener('keyup', addPreviewMarkdownBtn)
     removeBtn.addEventListener('click', removeForm)
   } catch (_) {}
 }
@@ -95,8 +100,16 @@ function renderMessage (msg, type) {
   }, 4000)
 }
 
-function updateFileRendering (e) {
+function addPreviewMarkdownBtn (e) {
   if (e.target.value.endsWith('.md')) {
-    // markdown rendering
+    var previewMarkdownBtn = document.querySelector('.preview-markdown-btn')
+    previewMarkdownBtn.dataset.form = e.target.dataset.form
+    previewMarkdownBtn.innerText = 'Preview'
+    previewMarkdownBtn.addEventListener('click', previewMarkdown)
   }
+}
+
+function previewMarkdown (e) {
+  var previewEl = document.getElementById(`markdown-preview-${e.target.dataset.form}`)
+  previewEl.innerHTML = marked('~~hey~~')
 }

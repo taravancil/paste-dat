@@ -167,3 +167,7 @@ button.remove img {
 button.remove:hover {
   background: none;
 }
+
+button:empty {
+  visibility: hidden;
+}
