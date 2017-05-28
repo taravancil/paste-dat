@@ -73,7 +73,7 @@ function removeForm (e) {
 
 function renderMessage (msg, type) {
   messageEl.innerText = msg
-  messageEl.classList.add(type || '')
+  if (type) messageEl.classList.add(type)
   window.setTimeout(function () {
     messageEl.classList.remove('error')
     messageEl.innerText = ''
