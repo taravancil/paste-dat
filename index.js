@@ -58,6 +58,7 @@ function appendForm () {
         <img src="/img/trash.png"/>
       </button>`
   }
+  var textarea = `<textarea name="content" data-form=${form.id}></textarea>`
 
   const formContent = `
     <!-- TODO allow user to do any kind of file -->
@@ -65,14 +66,10 @@ function appendForm () {
       <input autofocus data-form=${form.id} name="path" placeholder="Filename including extension"/>
       ${removeBtn}
     </div>
+    ${textarea}
   `
 
   form.innerHTML = formContent
-
-  var textarea = document.createElement('textarea')
-  textarea.name = 'content'
-  textarea.dataset.form = form.id
-  form.appendChild(textarea)
   formsEl.appendChild(form)
 
   try {
