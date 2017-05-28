@@ -48,28 +48,43 @@ function appendForm () {
   formCount += 1
   let form = document.createElement('form')
   form.id = 'add-file-form-' + formCount
+  form.classList.add('file-form')
+
+  var removeBtn = ''
+  if (formCount !== 1) {
+    var removeBtn = `
+      <button type="button" class="remove" data-form=${form.id}>
+        <span>Remove</span>
+        <img src="/img/trash.png"/>
+      </button>`
+  }
 
   const formContent = `
     <!-- TODO allow user to do any kind of file -->
-    <input autofocus name="path" placeholder="Filename including extension"/>
-    <textarea name="content"></textarea>
+    <div class="header">
+      <input autofocus name="path" placeholder="Filename including extension"/>
+      ${removeBtn}
+    </div>
   `
 
   form.innerHTML = formContent
 
-  if (formCount !== 1) {
-    var removeBtn = document.createElement('button')
-    removeBtn.innerText = 'X'
-    removeBtn.dataset.form = form.id
-    removeBtn.addEventListener('click', removeForm)
-    form.appendChild(removeBtn)
-  }
+  var textarea = document.createElement('textarea')
+  textarea.name = 'content'
+  form.appendChild(textarea)
   formsEl.appendChild(form)
+
+  try {
+    document.querySelector(`button[data-form=${form.id}`).addEventListener(
+     'click',
+      removeForm
+    )
+  } catch (_) {}
 }
 
 function removeForm (e) {
-  const form = document.getElementById(e.target.dataset.form)
-  mainEl.removeChild(form)
+  const form = document.getElementById(e.target.parentElement.dataset.form)
+  formsEl.removeChild(form)
 }
 
 function renderMessage (msg, type) {
