@@ -178,6 +178,9 @@ textarea.hidden,
 }
 
 footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
   background: #fff;
   border-top: 1px solid #ddd;
@@ -186,7 +189,15 @@ footer {
   left: 0;
   padding: 1rem 0;
   box-shadow: 0 0 1px #ddd;
-  text-align: right;
+}
+
+footer .info {
+  font-size: .9rem;
+  margin-left: 1rem;
+}
+
+footer .actions {
+  margin-right: 1rem;
 }
 
 button {
@@ -200,8 +211,12 @@ button {
   cursor: pointer;
   border-color: #0b51de;
   color: #0b51de;
-  margin-right: 1rem;
+  margin-right: .5rem;
   width: auto;
+}
+
+button:last-child {
+  margin-right: 0;
 }
 
 button:hover {
