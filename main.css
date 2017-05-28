@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+html {
+  padding: 5px;
+}
+
 body {
   font-size:16px;
   margin:auto;
@@ -9,10 +13,16 @@ body {
   font-family:BlinkMacSystemFont,'Helvetica Neue',sans-serif;
   color: #111;
   margin-bottom: 100px;
+  line-height: 1.4;
 }
 
 body a {
   color: #0b51de;
+}
+
+.help {
+  font-size: .85rem;
+  margin-bottom: 3rem;
 }
 
 .file-form {
