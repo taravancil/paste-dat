@@ -62,7 +62,7 @@ function appendForm () {
   const formContent = `
     <!-- TODO allow user to do any kind of file -->
     <div class="header">
-      <input autofocus name="path" placeholder="Filename including extension"/>
+      <input autofocus data-form=${form.id} name="path" placeholder="Filename including extension"/>
       ${removeBtn}
     </div>
   `
@@ -71,14 +71,16 @@ function appendForm () {
 
   var textarea = document.createElement('textarea')
   textarea.name = 'content'
+  textarea.dataset.form = form.id
   form.appendChild(textarea)
   formsEl.appendChild(form)
 
   try {
-    document.querySelector(`button[data-form=${form.id}`).addEventListener(
-     'click',
-      removeForm
-    )
+    var pathInput = document.querySelector(`input[data-form=${form.id}`)
+    var removeBtn = document.querySelector(`button[data-form=${form.id}`)
+
+    pathInput.addEventListener('keyup', updateFileRendering)
+    removeBtn.addEventListener('click', removeForm)
   } catch (_) {}
 }
 
@@ -94,4 +96,10 @@ function renderMessage (msg, type) {
     messageEl.classList.remove('error')
     messageEl.innerText = ''
   }, 4000)
+}
+
+function updateFileRendering (e) {
+  if (e.target.value.endsWith('.md')) {
+    // markdown rendering
+  }
 }
