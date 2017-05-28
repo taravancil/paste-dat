@@ -25,6 +25,10 @@ body a {
   margin-bottom: 2rem;
 }
 
+.files-info {
+  margin-bottom: 2rem;
+}
+
 .file-form {
   margin-bottom: 2rem;
 }
@@ -51,7 +55,7 @@ textarea {
 }
 
 label {
-  margin-bottom: .5rem;
+  margin-bottom: .25rem;
   font-size: .85rem;
 }
 
