@@ -33,7 +33,7 @@ function createGist () {
       }
 
       Promise.all(promises)
-        .then(function (data) {
+        .then(function () {
           archive.commit()
           window.location = archive.url
         })
