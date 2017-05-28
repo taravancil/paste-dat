@@ -168,13 +168,27 @@ textarea.hidden,
 }
 
 #message {
-  padding:5px 10px;
-  border-radius:2px;
-  border:1px solid #ddd;
+  padding: 5px 10px;
+  border-radius: 3px;
+  color: #9e9e9e;
+  border: 2px solid;
+  font-size: .85rem;
+  position: absolute;
+  bottom: 80px;
+  right: 1rem;
 }
 
-#message:empty{
+#message:empty {
   visibility: hidden;
+  height: 32px;
+}
+
+#message.info {
+  color: #ffc107;
+}
+
+#message.error {
+  color: #f44336;
 }
 
 footer {

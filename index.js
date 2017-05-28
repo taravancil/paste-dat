@@ -13,10 +13,16 @@ document.getElementById('add-file').addEventListener('click', appendForm)
 
 function createGist () {
   var archive
-  DatArchive.create({
-    title: document.querySelector('input[name="title"]').value || '',
-    description: document.querySelector('input[name="description"]').value || ''
-  })
+  var fileForms = document.querySelectorAll('form')
+
+  // basic check to see if files have content
+  // TODO: this is not correct - imagine if user has 2 forms, content in one but
+  // not the first.
+  if (fileForms.length && fileForms[0].content.value) {
+    DatArchive.create({
+      title: document.querySelector('input[name="title"]').value || '',
+      description: document.querySelector('input[name="description"]').value || ''
+    })
     .then(function (res) {
       archive = res
 
@@ -34,16 +40,19 @@ function createGist () {
         }
       }
 
-      Promise.all(promises)
-        .then(function () {
-          archive.commit()
-          window.location = archive.url
-        })
+      if (promises.length) {
+        Promise.all(promises)
+          .then(function () {
+            archive.commit()
+            window.location = archive.url
+          })
+      } else renderMessage('Try adding some content to your files!', 'info')
     })
     .catch(function (err) {
       console.error(err)
-      renderMsg('Something went wrong', 'error')
+      renderMessage('Something went wrong', 'error')
     })
+  } else renderMessage('Try adding some files!', 'info')
 }
 
 function appendForm () {
