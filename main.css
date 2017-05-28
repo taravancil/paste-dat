@@ -130,7 +130,6 @@ input::-webkit-input-placeholder {
 
 input:focus,
 textarea:focus {
-  // box-shadow: 0 0 5px #006dff;
   border: 1px solid #0b51de;
 }
 
