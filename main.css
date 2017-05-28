@@ -107,6 +107,7 @@ textarea {
 label {
   margin-bottom: .25rem;
   font-size: .85rem;
+  font-weight: 500;
 }
 
 input,
