@@ -1,0 +1,27 @@
+{
+  "name": "dat-gist",
+  "version": "1.0.0",
+  "description": "A peer-to-peer gist-like app built with Dat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taravancil/dat-gist.git"
+  },
+  "keywords": [
+    "dat",
+    "gist",
+    "beaker browser",
+    "peer-to-peer"
+  ],
+  "author": "Tara Vancil <tbvanc@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/taravancil/dat-gist/issues"
+  },
+  "homepage": "https://github.com/taravancil/dat-gist#readme",
+  "dependencies": {},
+  "devDependencies": {}
+}
