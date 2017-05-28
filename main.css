@@ -119,7 +119,7 @@ button {
   outline: 0;
   background: none;
   font-size: .95rem;
-  padding: .65rem;
+  padding: .65rem 1rem;
   border: 2px solid;
   border-radius: 3px;
   cursor: pointer;
