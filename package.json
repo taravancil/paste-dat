@@ -4,7 +4,7 @@
   "description": "A peer-to-peer gist-like app built with Dat",
   "main": "index.js",
   "scripts": {
-    "build": "browserify index.js -o index.build.js",
+    "build": "browserify index.js | uglifyjs -o index.build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,6 +27,7 @@
     "marked": "^0.3.6"
   },
   "devDependencies": {
-    "browserify": "^14.4.0"
+    "browserify": "^14.4.0",
+    "uglify-es": "^3.0.12"
   }
 }
