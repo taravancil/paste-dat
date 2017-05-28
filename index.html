@@ -1,25 +1,28 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Write gists with Dat</title>
-    <style>
-      input,label,textarea{display:block;margin-bottom: 1rem;}
-      textarea{resize:nonestoehu;}
-      #message{}
-      #message:empty{visibility:hidden;}
-    </style>
+    <meta charset="utf-8">
+    <title>Share files secretly with Dat</title>
+    <link rel="stylesheet" href="main.css"/>
   </head>
   <body>
     <main>
-      <h1>Write gists with Dat</h1>
       <p id="message"></p>
-      <input name="title" placeholder="Title (optional)"/>
-      <input name="description" placeholder="Description (optional)" />
+      <div class="files-info">
+        <label for="title">Title</label>
+        <input name="title" placeholder="Title (optional)" />
+
+        <label for="description">Description</label>
+        <input name="description" placeholder="Description (optional)" />
+      </div>
+
       <!-- file forms are added here -->
       <div id="forms-container"></div>
 
-      <button id="add-file">Add file</button>
-      <button id="submit">Create gist</button>
+      <footer>
+        <button id="add-file">Add file +</button>
+        <button id="submit" class="primary">Upload files</button>
+      </footer>
     </main>
     <script src="/index.js"></script>
   </body>
