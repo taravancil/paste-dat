@@ -1,5 +1,6 @@
 const mainEl = document.querySelector('main')
 const submitBtn = document.getElementById('submit')
+let messageEl = document.getElementById('message')
 let formCount = 0 // the number of file forms that are currently rendered
 
 // render one form by default
@@ -33,11 +34,15 @@ function createGist () {
       }
     }
 
-    Promise.all(promises)
-      .then(function (data) {
-        archive.commit()
-      })
-  })
+      Promise.all(promises)
+        .then(function (data) {
+          archive.commit()
+        })
+    })
+    .catch(function (err) {
+      console.error(err)
+      renderMsg('Something went wrong', 'error')
+    })
 }
 
 function appendForm () {
@@ -62,10 +67,19 @@ function appendForm () {
     removeBtn.addEventListener('click', removeForm)
     form.appendChild(removeBtn)
   }
-  mainEl.appendChild(form)
+  formsEl.appendChild(form)
 }
 
 function removeForm (e) {
   const form = document.getElementById(e.target.dataset.form)
   mainEl.removeChild(form)
+}
+
+function renderMessage (msg, type) {
+  messageEl.innerText = msg
+  messageEl.classList.add(type || '')
+  window.setTimeout(function () {
+    messageEl.classList.remove('error')
+    messageEl.innerText = ''
+  }, 4000)
 }
