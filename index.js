@@ -20,6 +20,18 @@ function appendForm () {
   `
 
   form.innerHTML = formContent
+
+  if (formCount !== 1) {
+    var removeBtn = document.createElement('button')
+    removeBtn.innerText = 'X'
+    removeBtn.dataset.form = form.id
+    removeBtn.addEventListener('click', removeForm)
+    form.appendChild(removeBtn)
+  }
   mainEl.appendChild(form)
 }
 
+function removeForm (e) {
+  const form = document.getElementById(e.target.dataset.form)
+  mainEl.removeChild(form)
+}
