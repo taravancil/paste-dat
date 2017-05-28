@@ -15,18 +15,6 @@ body a {
   color: #0b51de;
 }
 
-.files-info {
-}
-
-.files-info input {
-  // width: calc(100% - 20px) !important;
-}
-
-.files-info input:last-child {
-  margin-bottom: 0;
-}
-
-.files-info,
 .file-form {
   margin-bottom: 2rem;
 }
