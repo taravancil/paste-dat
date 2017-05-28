@@ -61,7 +61,7 @@ function appendForm () {
       </button>`
   }
   var textarea = `<textarea name="content" data-form=${form.id}></textarea>`
-  var markdownPreview = `<p id="markdown-preview-${form.id}"></p>`
+  var markdownPreview = `<p id="markdown-preview-${form.id}" class="markdown-preview hidden"></p>`
 
   const formContent = `
     <!-- TODO allow user to do any kind of file -->
@@ -111,5 +111,10 @@ function addPreviewMarkdownBtn (e) {
 
 function previewMarkdown (e) {
   var previewEl = document.getElementById(`markdown-preview-${e.target.dataset.form}`)
-  previewEl.innerHTML = marked('~~hey~~')
+  var form = document.getElementById(e.target.dataset.form)
+  var textarea = form.content
+  var markdown = textarea.value
+  textarea.classList.add('hidden')
+  previewEl.innerHTML = marked(markdown)
+  previewEl.classList.remove = ('hidden')
 }
