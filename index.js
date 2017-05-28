@@ -67,7 +67,8 @@ function appendForm () {
     <!-- TODO allow user to do any kind of file -->
     <div class="header">
       <input autofocus data-form=${form.id} name="path" placeholder="Filename including extension"/>
-      <button type="button" class="preview-markdown-btn markdown"></button>
+      <button type="button" id="preview-markdown-btn-${form.id}" data-form=${form.id} class="preview-markdown-btn markdown"></button>
+      <button type="button" id="edit-btn-${form.id}" data-form=${form.id} class="edit-btn"></button>
       ${removeBtn}
     </div>
     ${textarea}
@@ -77,11 +78,24 @@ function appendForm () {
   form.innerHTML = formContent
   formsEl.appendChild(form)
 
+  var previewMarkdownBtn = document.getElementById(`preview-markdown-btn-${form.id}`)
+  var editBtn = document.getElementById(`edit-btn-${form.id}`)
+
+  previewMarkdownBtn.addEventListener('click', previewMarkdown)
+  editBtn.addEventListener('click', showTextarea)
+
   try {
     var pathInput = document.querySelector(`input[data-form=${form.id}`)
-    var removeBtn = document.querySelector(`button[data-form=${form.id}`)
+    var removeBtn = document.querySelector(`button.remove[data-form=${form.id}`)
 
-    pathInput.addEventListener('keyup', addPreviewMarkdownBtn)
+    pathInput.addEventListener('keyup', function (e) {
+      if (e.target.value.endsWith('.md')) {
+        renderPreviewMarkdownBtn(form.id)
+      } else {
+        editBtn.innerHTML = ''
+        previewMarkdownBtn.innerHTML = ''
+      }
+    })
     removeBtn.addEventListener('click', removeForm)
   } catch (_) {}
 }
@@ -100,21 +114,38 @@ function renderMessage (msg, type) {
   }, 4000)
 }
 
-function addPreviewMarkdownBtn (e) {
-  if (e.target.value.endsWith('.md')) {
-    var previewMarkdownBtn = document.querySelector('.preview-markdown-btn')
-    previewMarkdownBtn.dataset.form = e.target.dataset.form
-    previewMarkdownBtn.innerText = 'Preview'
-    previewMarkdownBtn.addEventListener('click', previewMarkdown)
-  }
+function renderPreviewMarkdownBtn (id) {
+  var previewMarkdownBtn = document.getElementById(`preview-markdown-btn-${id}`)
+  var editBtn = document.getElementById(`edit-btn-${id}`)
+
+  previewMarkdownBtn.innerHTML = '<span>Preview</span><img src="/img/eye.png"/>'
 }
 
 function previewMarkdown (e) {
-  var previewEl = document.getElementById(`markdown-preview-${e.target.dataset.form}`)
-  var form = document.getElementById(e.target.dataset.form)
+  var previewBtn = e.target.parentElement
+  var previewEl = document.getElementById(`markdown-preview-${previewBtn.dataset.form}`)
+  var form = document.getElementById(previewBtn.dataset.form)
   var textarea = form.content
   var markdown = textarea.value
+  var editBtn = document.getElementById(`edit-btn-${form.id}`)
+
   textarea.classList.add('hidden')
   previewEl.innerHTML = marked(markdown)
   previewEl.classList.remove = ('hidden')
+
+  editBtn.innerHTML = '<span>Edit</span><img src="/img/pencil.png"/>'
+  previewBtn.innerHTML = ''
+}
+
+function showTextarea (e) {
+  var editBtn = e.target.parentElement // TODO
+  var form = document.getElementById(editBtn.dataset.form)
+  var textarea = form.content
+  var previewEl = document.getElementById(`markdown-preview-${editBtn.dataset.form}`)
+
+  editBtn.innerHTML = ''
+  renderPreviewMarkdownBtn(editBtn.dataset.form)
+  previewEl.classList.add('hidden')
+  textarea.classList.remove('hidden')
+  textarea.focus()
 }
