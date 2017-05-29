@@ -270,9 +270,9 @@ function previewMarkdown (e) {
   var markdown = textarea.value
   var editBtn = document.getElementById(`edit-btn-${form.id}`)
 
-  textarea.classList.add('hidden')
   previewEl.innerHTML = marked(markdown)
-  previewEl.classList.remove = ('hidden')
+  textarea.classList.add('hidden')
+  previewEl.classList.remove('hidden')
 
   editBtn.innerHTML = '<span>Edit</span><img src="/img/pencil.png"/>'
   previewBtn.innerHTML = ''
