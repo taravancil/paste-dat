@@ -84,7 +84,7 @@ async function createPreviewPage (archive) {
         margin:.5rem 0 1rem 0;
         max-height:200px;
         overflow-x:hidden;
-        overflow-y:auto;
+        overflow-y:hidden;
         white-space:pre-line;
       }
       .preview.markdown{
