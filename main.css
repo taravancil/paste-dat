@@ -232,6 +232,18 @@ button {
   width: auto;
 }
 
+button[disabled] {
+  cursor: default;
+}
+
+button[disabled]:hover {
+  background: inherit;
+}
+
+button.primary[disabled]:hover {
+  background: #2167f3;
+}
+
 button:last-child {
   margin-right: 0;
 }

@@ -297,7 +297,12 @@ function showTextarea (e) {
 }
 
 function detectUserAgent () {
-  if (!navigator.userAgent.includes('BeakerBrowser')) {
+  if (navigator.userAgent.includes('BeakerBrowser')) {
+    // enable form
+    document.querySelectorAll('[disabled]').forEach(function (el) {
+      el.disabled = false
+    })
+  } else {
     renderMessage('Sorry, PasteDat only works in the Beaker browser.', 'error', false)
   }
 }
