@@ -66,7 +66,13 @@ async function createPreviewPage (archive) {
       }
       a{color:#0b51de;}
       ul{list-style:none;}
-      .file-preview{font-size:.9rem;width:100%;position:relative;}
+      .file-preview{
+        font-size:.9rem;
+        width:100%;
+        position:relative;
+        display:block;
+        margin-bottom:1.5rem;
+      }
       .preview {
         border-radius:3px 3px 0 0;
         border:1px solid #9e9e9e;
@@ -78,6 +84,10 @@ async function createPreviewPage (archive) {
         overflow-x:hidden;
         overflow-y:auto;
         white-space:pre-line;
+      }
+      .preview.markdown{
+        font-family:BlinkMacSystemFont,'Helvetica Neue',sans-serif;
+        max-height:480px !important;
       }
       .preview.more-lines{padding-bottom:24px;max-height:225px;}
       .preview-note{
@@ -126,6 +136,7 @@ async function createPreviewPage (archive) {
 
 async function generateFilePreview (archive, path) {
   const file = await archive.readFile(path)
+  const isMarkdown = path.endsWith('.md')
   let previewNote = ''
 
   // only preview the first 10 lines
@@ -136,7 +147,6 @@ async function generateFilePreview (archive, path) {
   preview = preview.reduce(function (acc, str) {
     return acc + '\n' + str
   }, '')
-
 
   // trim leading and trailing newline
   preview = preview.trim()
@@ -151,8 +161,8 @@ async function generateFilePreview (archive, path) {
   return `
     <li class="file-preview">
       <a href=${path}>${path}</a>
-      <pre class="preview ${previewNote ? 'more-lines' : ''}">
-        ${escape(preview)}
+      <pre class="preview ${previewNote ? 'more-lines' : ''} ${isMarkdown ? 'markdown' : ''}">
+        ${isMarkdown ? marked(preview) : escape(preview)}
       </pre>
       ${previewNote}
     </li>`
