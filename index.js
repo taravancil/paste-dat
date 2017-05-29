@@ -61,7 +61,7 @@ async function createPreviewPage (archive) {
       body{
         font-size:16px;
         margin:auto;
-        max-width:600;
+        max-width:700px;
         font-family:BlinkMacSystemFont,'Helvetica Neue',sans-serif;
         line-height:1.4;
         color:#111;
