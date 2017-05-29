@@ -69,7 +69,7 @@ async function createPreviewPage (archive) {
         color:#111;
       }
       a{color:#0b51de;}
-      ul{list-style:none;}
+      ul{list-style:none;margin-left:0;}
       .file-preview{
         font-size:.9rem;
         width:100%;
