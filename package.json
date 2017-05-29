@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/taravancil/past-dat#readme",
   "dependencies": {
+    "escape-html": "^1.0.3",
     "marked": "^0.3.6"
   },
   "devDependencies": {

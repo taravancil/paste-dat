@@ -1,4 +1,5 @@
 const marked = require('marked')
+const escape = require('escape-html')
 
 const formsEl = document.getElementById('forms-container')
 const submitBtn = document.getElementById('submit')
@@ -58,12 +59,25 @@ async function createPreviewPage (archive) {
       body{
         font-size:16px;
         margin:auto;
-        max-width:500;
+        max-width:600;
         font-family:BlinkMacSystemFont,'Helvetica Neue',sans-serif;
         line-height:1.4;
+        color:#111;
       }
       a{color:#0b51de;}
       ul{list-style:none;}
+      .file-preview{font-size:.9rem;width:100%;}
+      .preview {
+        border-radius:3px;
+        border:1px solid #9e9e9e;
+        padding:.3rem .4rem;
+        font-family:Consolas, Monaco, 'Lucida Console', monospace;
+        font-size:.8rem;
+        margin:.5rem 0 1rem 0;
+        max-height:200px;
+        overflow-y:auto;
+        white-space:pre-line;
+      }
     </style>
   `
 
@@ -95,7 +109,13 @@ async function createPreviewPage (archive) {
 async function generateFilePreview (archive, path) {
   const file = await archive.readFile(path)
 
-  return `<li>${file}</li>`
+  return `
+    <li class="file-preview">
+      <a href=${path}>${path}</a>
+      <pre class="preview">
+        ${escape(file)}
+      </pre>
+    </li>`
 
   // TODO only take the first few bytes
 }
