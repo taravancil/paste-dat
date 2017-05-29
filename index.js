@@ -14,6 +14,7 @@ document.getElementById('add-file').addEventListener('click', appendForm)
 
 async function createGist () {
   var fileForms = document.querySelectorAll('form')
+  var paths = []
 
   // basic check to see if files have content
   // TODO: this is not correct - imagine if user has 2 forms, content in one but
@@ -34,17 +35,18 @@ async function createGist () {
 
       if (path && content) {
         await archive.writeFile(path, content)
+        paths.push(path)
       }
     }
-
     await archive.commit()
-    // if not index.html
-    await createPreviewPage(archive)
+
+    // if the user didn't add an index.html, generate a preview page
+    if (paths.indexOf('index.html') === -1) await createPreviewPage(archive)
+
     window.location = archive.url
   } else renderMessage('Try adding some files!', 'info')
 }
 
-// TODO only do this if user didn't create an index.html
 async function createPreviewPage (archive) {
   let previewHTML, filesListHTML, filesListItemsHTML  = ''
 
