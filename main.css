@@ -172,6 +172,7 @@ textarea.hidden,
 #message {
   padding: 5px 10px;
   border-radius: 3px;
+  background: #fff;
   color: #9e9e9e;
   border: 2px solid;
   font-size: .85rem;
