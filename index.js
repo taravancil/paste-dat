@@ -91,8 +91,9 @@ async function createPreviewPage (archive) {
         font-family:BlinkMacSystemFont,'Helvetica Neue',sans-serif;
         max-height:480px !important;
       }
-      .preview.more-lines{padding-bottom:24px;max-height:225px;}
-      .preview-note{
+      .preview.more-lines{padding-bottom:24px;max-height:235px;}
+      .preview.more-lines.expanded{max-height:none;}
+      .preview-toggle-expand{
         position:absolute;
         bottom:0;
         left:0;
@@ -107,31 +108,55 @@ async function createPreviewPage (archive) {
         text-decoration:none;
         font-family:Consolas,Monaco,'Lucida Console', monospace;
       }
-      .preview-note:hover{color:#525252;}
-    </style>
-  `
+      .preview-toggle-expand.hidden{visibility:hidden;}
+      .preview-toggle-expand:hover{color:#525252;}
+      </style>
+      `
 
-  for (let path of files) {
-    filesListItemsHTML += await generateFilePreview(archive, path)
-  }
+      const js = `
+      <script>
+      var toggles = document.querySelectorAll('.preview-toggle-expand')
+      toggles.forEach(function (toggle) {
+        toggle.addEventListener('click', toggleExpand)
+      })
 
-  filesListHTML = `<ul>${filesListItemsHTML}</ul>`
-  previewHTML = `
-    <html lang="en">
-      <head>
-        <meta charset="utf-8">
-        ${styles}
-      </head>
-      <body>
-        <main>
-          ${filesListHTML}
-        </main>
-      </body>
-    </html>
-  `
+      function toggleExpand (e) {
+        var previewId = e.target.dataset.preview
+        var preview = document.getElementById(previewId)
 
-  await archive.writeFile('/index.html', previewHTML)
-  return
+        var collapseSelector = '[data-preview="' + previewId + '"].collapse'
+        var collapseBtn = document.querySelector(collapseSelector)
+
+        var expandSelector = '[data-preview="' + previewId + '"].expand'
+        var expandBtn = document.querySelector(expandSelector)
+
+        collapseBtn.classList.toggle('hidden')
+        expandBtn.classList.toggle('hidden')
+        preview.classList.toggle('expanded')
+      }
+      </script>
+      `
+
+      for (let path of files) {
+        filesListItemsHTML += await generateFilePreview(archive, path)
+      }
+
+      filesListHTML = `<ul>${filesListItemsHTML}</ul>`
+      previewHTML = `
+      <html lang="en">
+        <head>
+          <meta charset="utf-8">
+          ${styles}
+        </head>
+        <body>
+          <main>${filesListHTML}</main>
+        ${js}
+        </body>
+      </html>
+      `
+
+    await archive.writeFile('/index.html', previewHTML)
+    return
 
   // TODOrender a share thing if is owner
 }
@@ -141,30 +166,23 @@ async function generateFilePreview (archive, path) {
   const isMarkdown = path.endsWith('.md')
   let previewNote = ''
 
-  // only preview the first 10 lines
   let lines = file.split('\n')
-  let preview = lines.slice(0, 10)
-
-  // re-add the newlines
-  preview = preview.reduce(function (acc, str) {
-    return acc + '\n' + str
-  }, '')
-
-  // trim leading and trailing newline
-  preview = preview.trim()
 
   if (lines.length > 10) {
     previewNote = `
-      <a href="/${path}" class="preview-note">
-        + ${lines.length - 10} more lines...
-      </a>`
+    <span data-preview="preview-${path.replace('.', '')}" class="preview-toggle-expand expand">
+    + ${lines.length - 10} more lines...
+    </span>
+      <span data-preview="preview-${path.replace('.', '')}" class="preview-toggle-expand collapse hidden">
+        - Less
+      </span>`
   }
 
   return `
     <li class="file-preview">
       <a href=${path}>${path}</a>
-      <pre class="preview ${previewNote ? 'more-lines' : ''} ${isMarkdown ? 'markdown' : ''}">
-        ${isMarkdown ? marked(preview) : escape(preview)}
+      <pre id="preview-${path}" class="preview ${previewNote ? 'more-lines' : ''} ${isMarkdown ? 'markdown' : ''}">
+        ${isMarkdown ? marked(file) : escape(file)}
       </pre>
       ${previewNote}
     </li>`
