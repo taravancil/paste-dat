@@ -66,18 +66,36 @@ async function createPreviewPage (archive) {
       }
       a{color:#0b51de;}
       ul{list-style:none;}
-      .file-preview{font-size:.9rem;width:100%;}
+      .file-preview{font-size:.9rem;width:100%;position:relative;}
       .preview {
-        border-radius:3px;
+        border-radius:3px 3px 0 0;
         border:1px solid #9e9e9e;
         padding:.3rem .4rem;
         font-family:Consolas, Monaco, 'Lucida Console', monospace;
         font-size:.8rem;
         margin:.5rem 0 1rem 0;
         max-height:200px;
+        overflow-x:hidden;
         overflow-y:auto;
         white-space:pre-line;
       }
+      .preview.more-lines{padding-bottom:24px;max-height:225px;}
+      .preview-note{
+        position:absolute;
+        bottom:0;
+        left:0;
+        padding:.1rem 0.4rem;
+        font-size:.8rem;
+        color:#9e9e9e;
+        border:1px solid #9e9e9e;
+        border-radius:0 0 3px 3px;
+        width:100%;
+        background:#f4f6ff;
+        cursor:pointer;
+        text-decoration:none;
+        font-family:Consolas,Monaco,'Lucida Console', monospace;
+      }
+      .preview-note:hover{color:#525252;}
     </style>
   `
 
@@ -108,16 +126,36 @@ async function createPreviewPage (archive) {
 
 async function generateFilePreview (archive, path) {
   const file = await archive.readFile(path)
+  let previewNote = ''
+
+  // only preview the first 10 lines
+  let lines = file.split('\n')
+  let preview = lines.slice(0, 10)
+
+  // re-add the newlines
+  preview = preview.reduce(function (acc, str) {
+    return acc + '\n' + str
+  }, '')
+
+
+  // trim leading and trailing newline
+  preview = preview.trim()
+
+  if (lines.length > 10) {
+    previewNote = `
+      <a href="/${path}" class="preview-note">
+        + ${lines.length - 10} more lines...
+      </a>`
+  }
 
   return `
     <li class="file-preview">
       <a href=${path}>${path}</a>
-      <pre class="preview">
-        ${escape(file)}
+      <pre class="preview ${previewNote ? 'more-lines' : ''}">
+        ${escape(preview)}
       </pre>
+      ${previewNote}
     </li>`
-
-  // TODO only take the first few bytes
 }
 
 function appendForm () {
