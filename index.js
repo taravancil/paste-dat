@@ -89,7 +89,6 @@ async function createPreviewPage (archive) {
       }
       .preview.markdown{
         font-family:BlinkMacSystemFont,'Helvetica Neue',sans-serif;
-        max-height:480px !important;
       }
       .preview.more-lines{padding-bottom:24px;max-height:235px;}
       .preview.more-lines.expanded{max-height:none;}
