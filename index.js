@@ -87,7 +87,7 @@ async function createPreviewPage (archive) {
         max-height:200px;
         overflow-x:hidden;
         overflow-y:hidden;
-        white-space:pre-line;
+        white-space:pre-wrap;
       }
       .preview.markdown{
         font-family:BlinkMacSystemFont,'Helvetica Neue',sans-serif;
@@ -182,9 +182,7 @@ async function generateFilePreview (archive, path) {
   return `
     <li class="file-preview">
       <a href=${path}>${path}</a>
-      <pre id="preview-${path}" class="preview ${previewNote ? 'more-lines' : ''} ${isMarkdown ? 'markdown' : ''}">
-        ${isMarkdown ? marked(file) : escape(file)}
-      </pre>
+      <pre id="preview-${path}" class="preview ${previewNote ? 'more-lines' : ''} ${isMarkdown ? 'markdown' : ''}">${isMarkdown ? marked(file) : escape(file.trim())}</pre>
       ${previewNote}
     </li>`
 }
