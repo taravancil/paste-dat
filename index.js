@@ -11,48 +11,93 @@ appendForm()
 submitBtn.addEventListener('click', createGist)
 document.getElementById('add-file').addEventListener('click', appendForm)
 
-function createGist () {
-  var archive
+async function createGist () {
   var fileForms = document.querySelectorAll('form')
 
   // basic check to see if files have content
   // TODO: this is not correct - imagine if user has 2 forms, content in one but
   // not the first.
   if (fileForms.length && fileForms[0].content.value) {
-    DatArchive.create({
+    var archive = await DatArchive.create({
       title: document.querySelector('input[name="title"]').value || '',
       description: document.querySelector('input[name="description"]').value || ''
     })
-    .then(function (res) {
-      archive = res
 
-      // Figure out which files need to be added
-      var fileForms = document.querySelectorAll('form')
-      var promises = []
+    // Figure out which files need to be added
+    var fileForms = document.querySelectorAll('form')
 
-      for (var i = 0; i < fileForms.length; i++) {
-        var form = fileForms[i]
-        var path = form.path.value
-        var content = form.content.value
+    for (var i = 0; i < fileForms.length; i++) {
+      var form = fileForms[i]
+      var path = form.path.value
+      var content = form.content.value
 
-        if (path && content) {
-          promises.push(archive.writeFile(path, content))
-        }
+      if (path && content) {
+        await archive.writeFile(path, content)
       }
+    }
 
-      if (promises.length) {
-        Promise.all(promises)
-          .then(function () {
-            archive.commit()
-            window.location = archive.url
-          })
-      } else renderMessage('Try adding some content to your files!', 'info')
-    })
-    .catch(function (err) {
-      console.error(err)
-      renderMessage('Something went wrong', 'error')
-    })
+    await archive.commit()
+    // if not index.html
+    await createPreviewPage(archive)
+    window.location = archive.url
   } else renderMessage('Try adding some files!', 'info')
+}
+
+// TODO only do this if user didn't create an index.html
+async function createPreviewPage (archive) {
+  let previewHTML, filesListHTML, filesListItemsHTML  = ''
+
+  // files are only ever added to top-level directory, so recursive readdir
+  // is not necessary
+  const files = await archive.readdir('/')
+
+  const styles = `
+    <style>
+      *{box-sizing:border-box;}
+      html{padding:50px 5px;}
+      body{
+        font-size:16px;
+        margin:auto;
+        max-width:500;
+        font-family:BlinkMacSystemFont,'Helvetica Neue',sans-serif;
+        line-height:1.4;
+      }
+      a{color:#0b51de;}
+      ul{list-style:none;}
+    </style>
+  `
+
+  for (let path of files) {
+    filesListItemsHTML += await generateFilePreview(archive, path)
+  }
+
+  filesListHTML = `<ul>${filesListItemsHTML}</ul>`
+  previewHTML = `
+    <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        ${styles}
+      </head>
+      <body>
+        <main>
+          ${filesListHTML}
+        </main>
+      </body>
+    </html>
+  `
+
+  await archive.writeFile('/index.html', previewHTML)
+  return
+
+  // TODOrender a share thing if is owner
+}
+
+async function generateFilePreview (archive, path) {
+  const file = await archive.readFile(path)
+
+  return `<li>${file}</li>`
+
+  // TODO only take the first few bytes
 }
 
 function appendForm () {

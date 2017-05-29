@@ -4,7 +4,7 @@
   "description": "A peer-to-peer gist-like app built with Dat",
   "main": "index.js",
   "scripts": {
-    "build": "browserify index.js | uglifyjs -o index.build.js && cleancss -o main.min.css main.css",
+    "build": "browserify index.js -o index.build.js && cleancss -o main.min.css main.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,15 +20,14 @@
   "author": "Tara Vancil <tbvanc@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/taravancil/dat-gist/issues"
+    "url": "https://github.com/taravancil/paste-dat/issues"
   },
-  "homepage": "https://github.com/taravancil/dat-gist#readme",
+  "homepage": "https://github.com/taravancil/past-dat#readme",
   "dependencies": {
     "marked": "^0.3.6"
   },
   "devDependencies": {
     "browserify": "^14.4.0",
-    "clean-css-cli": "^4.1.3",
-    "uglify-es": "^3.0.12"
+    "clean-css-cli": "^4.1.3"
   }
 }
