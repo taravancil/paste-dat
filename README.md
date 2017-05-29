@@ -6,4 +6,4 @@ All file snippets created with PasteDat are hosted directly from your device and
 
 [Download Beaker](https://beakerbrowser.com/docs/install/)
 
-![alt text](./demo.gif) "PasteBin demo")
+![alt text](./demo.gif "PasteBin demo")
