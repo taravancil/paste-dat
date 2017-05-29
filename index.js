@@ -59,7 +59,7 @@ async function createPreviewPage (archive) {
   const styles = `
     <style>
       *{box-sizing:border-box;}
-      html{padding:50px 5px;}
+      html{padding:50px 10px;}
       body{
         font-size:16px;
         margin:auto;
@@ -69,7 +69,7 @@ async function createPreviewPage (archive) {
         color:#111;
       }
       a{color:#0b51de;}
-      ul{list-style:none;margin-left:0;}
+      ul{list-style:none;padding-left:0;}
       .file-preview{
         font-size:.9rem;
         width:100%;
