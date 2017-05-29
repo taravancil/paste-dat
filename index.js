@@ -9,6 +9,8 @@ let formCount = 0 // the number of file forms that are currently rendered
 // render one form by default
 appendForm()
 
+detectUserAgent()
+
 submitBtn.addEventListener('click', createGist)
 document.getElementById('add-file').addEventListener('click', appendForm)
 
@@ -44,7 +46,7 @@ async function createGist () {
     if (paths.indexOf('index.html') === -1) await createPreviewPage(archive)
 
     window.location = archive.url
-  } else renderMessage('Try adding some files!', 'info')
+  } else renderMessage('Try adding some files!', 'info', true)
 }
 
 async function createPreviewPage (archive) {
@@ -246,13 +248,16 @@ function removeForm (e) {
   formsEl.removeChild(form)
 }
 
-function renderMessage (msg, type) {
+function renderMessage (msg, type, timeout) {
   messageEl.innerText = msg
   if (type) messageEl.classList.add(type)
-  window.setTimeout(function () {
-    messageEl.classList.remove('error')
-    messageEl.innerText = ''
-  }, 4000)
+
+  if (timeout) {
+    window.setTimeout(function () {
+      messageEl.classList.remove('error')
+      messageEl.innerText = ''
+    }, 4000)
+  }
 }
 
 function renderPreviewMarkdownBtn (id) {
@@ -289,4 +294,10 @@ function showTextarea (e) {
   previewEl.classList.add('hidden')
   textarea.classList.remove('hidden')
   textarea.focus()
+}
+
+function detectUserAgent () {
+  if (!navigator.userAgent.includes('BeakerBrowser')) {
+    renderMessage('Sorry, PasteDat only works in the Beaker browser.', 'error', false)
+  }
 }
