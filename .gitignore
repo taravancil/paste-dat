@@ -1,1 +1,4 @@
 node_modules
+build
+.dat
+package-lock.json
