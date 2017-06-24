@@ -9,3 +9,17 @@ at
 `dat://b67dc95528a225086e4d0e8f0afce6e042796b1490999ee7fd9ca9d5c11bf48d`
 
 ![alt text](./demo.gif "PasteBin demo")
+
+## Install
+
+To install your own instance of PasteDat, download the source code with [git](https://git-scm.com/), build it using [npm](https://www.npmjs.com/), and then serve with dat:
+
+```bash
+git clone git@github.com:taravancil/paste-dat.git
+cd paste-dat
+npm install
+npm run build
+dat share
+```
+
+Then, visit the dat address and you should see the app running.
