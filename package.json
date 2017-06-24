@@ -4,7 +4,10 @@
   "description": "A peer-to-peer gist-like app built with Dat",
   "main": "index.js",
   "scripts": {
-    "build": "browserify index.js -o index.build.js && cleancss -o main.min.css main.css",
+    "build": "npm run build:static && npm run build:css && npm run build:js",
+    "build:js": "browserify lib/index.js -o build/index.js",
+    "build:css": "cleancss -o build/main.min.css style/main.css",
+    "build:static": "mkdir -p build; cp -r static/* build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
