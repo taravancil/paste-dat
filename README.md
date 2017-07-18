@@ -16,6 +16,8 @@ at
 
 Download the [Beaker browser](https://beakerbrowser.com/docs/install/), then open PasteDat at  `dat://b67dc95528a225086e4d0e8f0afce6e042796b1490999ee7fd9ca9d5c11bf48d`. To enable PasteDat while you're offline, save it to your Library in Beaker. 
 
+### With the Dat CLI
+
 To create your own instance of PasteDat, clone the source, build it with [npm](https://www.npmjs.com/), and then serve with the [Dat CLI](https://github.com/datproject/dat/):
 
 ```bash
