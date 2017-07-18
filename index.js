@@ -55,6 +55,7 @@ async function createPreviewPage (archive) {
   // files are only ever added to top-level directory, so recursive readdir
   // is not necessary
   const files = await archive.readdir('/')
+  const info = await archive.getInfo()
 
   const styles = `
     <style>
@@ -153,6 +154,8 @@ async function createPreviewPage (archive) {
           ${styles}
         </head>
         <body>
+          <h1>${info.title || '<em>Untitled</em>'}</h1>
+          <p>${info.description || ''}</p>
           <main>${filesListHTML}</main>
         ${js}
         </body>
