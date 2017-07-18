@@ -12,7 +12,11 @@ at
 
 ## Install
 
-To install your own instance of PasteDat, download the source code with [git](https://git-scm.com/), build it using [npm](https://www.npmjs.com/), and then serve with dat:
+### With Beaker
+
+Download the [Beaker browser](https://beakerbrowser.com/docs/install/), then open PasteDat at  `dat://b67dc95528a225086e4d0e8f0afce6e042796b1490999ee7fd9ca9d5c11bf48d`. To enable PasteDat while you're offline, save it to your Library in Beaker. 
+
+To create your own instance of PasteDat, clone the source, build it with [npm](https://www.npmjs.com/), and then serve with the [Dat CLI](https://github.com/datproject/dat/):
 
 ```bash
 git clone git@github.com:taravancil/paste-dat.git
@@ -22,4 +26,4 @@ npm run build
 dat share
 ```
 
-Then, visit the dat address and you should see the app running.
+Finally, open the the Dat URL in [Beaker](https://beakerbrowser.com).
