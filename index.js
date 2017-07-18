@@ -139,7 +139,10 @@ async function createPreviewPage (archive) {
       `
 
       for (let path of files) {
-        filesListItemsHTML += await generateFilePreview(archive, path)
+        // Don't include the dat.json in share page
+        if (path !== 'dat.json') {
+          filesListItemsHTML += await generateFilePreview(archive, path)
+        }
       }
 
       filesListHTML = `<ul>${filesListItemsHTML}</ul>`
