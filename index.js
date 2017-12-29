@@ -301,7 +301,7 @@ function showTextarea (e) {
 }
 
 function detectUserAgent () {
-  if (navigator.userAgent.includes('BeakerBrowser')) {
+  if (window.DatArchive) {
     // enable form
     document.querySelectorAll('[disabled]').forEach(function (el) {
       el.disabled = false
