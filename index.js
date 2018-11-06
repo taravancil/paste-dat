@@ -177,10 +177,10 @@ async function generateFilePreview (archive, path) {
 
   if (lines.length > 10) {
     previewNote = `
-    <span data-preview="preview-${path.replace('.', '')}" class="preview-toggle-expand expand">
+    <span data-preview="preview-${path.replace(/\./g, '')}" class="preview-toggle-expand expand">
     + ${lines.length - 10} more lines...
     </span>
-      <span data-preview="preview-${path.replace('.', '')}" class="preview-toggle-expand collapse hidden">
+      <span data-preview="preview-${path.replace(/\./g, '')}" class="preview-toggle-expand collapse hidden">
         - Less
       </span>`
   }
@@ -188,7 +188,7 @@ async function generateFilePreview (archive, path) {
   return `
     <li class="file-preview">
       <a href=${path}>${path}</a>
-      <pre id="preview-${path}" class="preview ${previewNote ? 'more-lines' : ''} ${isMarkdown ? 'markdown' : ''}">${isMarkdown ? marked(file) : escape(file.trim())}</pre>
+      <pre id="preview-${path.replace(/\./g, '')}" class="preview ${previewNote ? 'more-lines' : ''} ${isMarkdown ? 'markdown' : ''}">${isMarkdown ? marked(file) : escape(file.trim())}</pre>
       ${previewNote}
     </li>`
 }
