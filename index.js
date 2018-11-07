@@ -40,7 +40,6 @@ async function createGist () {
         paths.push(path)
       }
     }
-    await archive.commit()
 
     // if the user didn't add an index.html, generate a preview page
     if (paths.indexOf('index.html') === -1) await createPreviewPage(archive)
